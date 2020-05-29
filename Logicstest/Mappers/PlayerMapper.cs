@@ -17,14 +17,14 @@ namespace Lineup.Logics.Mappers
 
         internal static IMapper Mapper { get; }
 
-        public static Player ToEntity(this PlayerDto game)
+        public static Player ToEntity(this PlayerDto player)
         {
-            return game == null ? null : Mapper.Map<Player>(game);
+            return player == null ? null : Mapper.Map<Player>(player);
         }
 
-        public static PlayerDto ToModel(this Player game)
+        public static PlayerDto ToModel(this Player player)
         {
-            return game == null ? null : Mapper.Map<PlayerDto>(game);
+            return player == null ? null : Mapper.Map<PlayerDto>(player);
         }
     }
 }

@@ -11,6 +11,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Data.DbContext;
+using Logics.Services;
+using Data.Repositories;
+using Logics.Entities;
+using Data.Dtos;
 
 namespace Lineup
 {
@@ -30,13 +34,15 @@ namespace Lineup
             services.AddDbContextPool<AppDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUserDto, IdentityRole<Guid>>(options =>
             {
                 options.Password.RequiredUniqueChars = 3;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             }).AddEntityFrameworkStores<AppDbContext>();
 
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IIdentityRepository, IdentityRepository>();
 
             services.AddControllersWithViews();
         }

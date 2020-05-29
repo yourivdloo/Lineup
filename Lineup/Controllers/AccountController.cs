@@ -5,24 +5,26 @@ using System.Threading.Tasks;
 using Lineup.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Logics.Services;
+using Logics.Entities;
 
 namespace Lineup.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly IIdentityService IIdentityService;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+
+        public AccountController(IIdentityService iIdentityService)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            this.IIdentityService = iIdentityService;
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+            await IIdentityService.SignOutAsync();
             return RedirectToAction("index", "home");
         }
 
@@ -37,12 +39,13 @@ namespace Lineup.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-                var result = await userManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var password = model.Password;
+                var result = await IIdentityService.CreateAsync(user,password);
 
                 if (result.Succeeded)
                 {
-                    await signInManager.SignInAsync(user, isPersistent: false);
+                    await IIdentityService.PasswordSignInAsync(model.Email, model.Password, false);
                     return RedirectToAction("index", "home");
                 }
 
@@ -65,9 +68,7 @@ namespace Lineup.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password,
-                                        model.RememberMe, false);
+                var result = await IIdentityService.PasswordSignInAsync(model.Email, model.Password, model.RememberMe);
 
                 if (result.Succeeded)
                 {
