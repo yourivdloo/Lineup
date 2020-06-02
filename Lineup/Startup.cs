@@ -15,6 +15,8 @@ using Logics.Services;
 using Data.Repositories;
 using Logics.Entities;
 using Data.Dtos;
+using Logics.Services.Interfaces;
+using Data.Repositories.Interfaces;
 
 namespace Lineup
 {

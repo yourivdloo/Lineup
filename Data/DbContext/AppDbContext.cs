@@ -18,6 +18,9 @@ namespace Data.DbContext
         }
 
         public DbSet<PlayerDto> Players { get; set; }
+        public DbSet<TeamDto> Teams { get; set; }
+        public DbSet<FormationDto> Formations { get; set; }
+        public DbSet<PlayerPositionDto> PlayerPositions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

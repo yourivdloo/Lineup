@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Logics.Classes
+namespace Logics.Entities
 {
     public class Player
     {

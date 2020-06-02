@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Data.Dtos;
 using System.Security.Claims;
 
-namespace Data.Repositories
+namespace Data.Repositories.Interfaces
 {
     public interface IIdentityRepository
     {
@@ -19,6 +19,8 @@ namespace Data.Repositories
         Task SignOutAsync();
 
         bool IsSignedIn(ClaimsPrincipal user);
+
+        Task<ApplicationUserDto> GetUserAsync(string userName);
 
     }
 }

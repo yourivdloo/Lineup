@@ -8,7 +8,8 @@ namespace Data.Dtos
 {
     public class TeamDto
     {
-        [Key] public int id { get; set; }
+        [Key] public int Id { get; set; }
+        public Guid UserId { get; set; }
         public string Name { get; set; }
 
     }

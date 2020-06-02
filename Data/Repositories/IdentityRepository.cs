@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.Dtos;
 using System.Security.Claims;
+using Data.Repositories.Interfaces;
 
 namespace Data.Repositories
 {
@@ -43,6 +44,11 @@ namespace Data.Repositories
         public bool IsSignedIn(ClaimsPrincipal user)
         {
             return SignInManager.IsSignedIn(user);
+        }
+
+        public async Task<ApplicationUserDto> GetUserAsync(string userName)
+        {
+            return await UserManager.FindByNameAsync(userName);
         }
     }
 }

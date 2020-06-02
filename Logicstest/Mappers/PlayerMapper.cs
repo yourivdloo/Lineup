@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
-using Logics.Classes;
+using Logics.Entities;
 using Lineup.Logics.Mappers;
 using Data.Dtos;
 

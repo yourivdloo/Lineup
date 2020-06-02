@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Logics.Services;
 using Logics.Entities;
+using Logics.Services.Interfaces;
 
 namespace Lineup.Controllers
 {
@@ -46,7 +47,7 @@ namespace Lineup.Controllers
                 if (result.Succeeded)
                 {
                     await IIdentityService.PasswordSignInAsync(model.Email, model.Password, false);
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("accounthome", "team");
                 }
 
                 foreach (var error in result.Errors)
@@ -72,7 +73,7 @@ namespace Lineup.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("accounthome", "team");
                 }
                     ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Logics.Entities;
 using System.Security.Claims;
 
-namespace Logics.Services
+namespace Logics.Services.Interfaces
 {
     public interface IIdentityService
     {
@@ -19,5 +19,7 @@ namespace Logics.Services
         Task SignOutAsync();
 
         bool IsSignedIn(ClaimsPrincipal user);
+
+        Task<ApplicationUser> GetUserAsync(string userName);
     }
 }

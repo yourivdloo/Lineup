@@ -7,6 +7,9 @@ using Data.Repositories;
 using Logics.Entities;
 using Logics.Mappers;
 using System.Security.Claims;
+using Logics.Services.Interfaces;
+using Data.Repositories.Interfaces;
+using Data.Dtos;
 
 namespace Logics.Services
 {
@@ -46,5 +49,13 @@ namespace Logics.Services
         {
             return IIdentityRepository.IsSignedIn(user);
         }
+
+        public async Task<ApplicationUser> GetUserAsync(string userName)
+        {
+            ApplicationUserDto applicationUserDto = await IIdentityRepository.GetUserAsync(userName);
+            return applicationUserDto.ToEntity();
+            
+        }
+
     }
 }

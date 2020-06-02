@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Data.Enums;
 
-namespace Logics.Classes
+namespace Logics.Entities
 {
     public class PlayerPosition
     {
