@@ -7,15 +7,15 @@ using Data.Dtos;
 
 namespace Lineup.Logics.Mappers
 {
-    public class PlayerMapperProfile : Profile
+    public class FormationMapperProfile : Profile
     {
 
-        public PlayerMapperProfile()
+        public FormationMapperProfile()
         {
-            CreateMap<Player, PlayerDto>(MemberList.Destination);
+            CreateMap<Formation, FormationDto>(MemberList.Destination);
 
             // model to entity
-            CreateMap<PlayerDto, Player>(MemberList.Source);
+            CreateMap<FormationDto, Formation>(MemberList.Source);
         }
     }
 }

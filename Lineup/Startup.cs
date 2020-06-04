@@ -46,6 +46,10 @@ namespace Lineup
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IIdentityRepository, IdentityRepository>();
 
+            services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
+
+
             services.AddControllersWithViews();
         }
 

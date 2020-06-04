@@ -1,14 +1,24 @@
 ﻿@model AccountHomeViewModel
 @{
-    ViewData["Title"] = "AccountHome";
+    ViewData["Title"] = "MyTeams";
 }
 
-<h1>AccountHome</h1>
-    <button asp-controller="Team" asp-action="AddTeam" class="btn btn-primary">Add team</button>
+<h1>My teams</h1>
+    <a asp-controller="Team" asp-action="AddTeam" class="btn btn-primary">Add team</a>
 @if (Model != null)
 {
     foreach (var team in Model.Teams)
     {
-<p>@team</p> <br />
+        <center>
+        <div class="card" style="width:30%">
+                <center>
+                    <h2 class="card-header">@team.Name</h2>
+                    <div class="card-body">
+                    <a asp-controller="Team" asp-action="ViewTeam" asp-route-id="@team.Id" class="btn btn-primary">View team</a>
+                    <a asp-controller="Team" asp-action="DeleteTeam" asp-route-id=@team.Id class="btn btn-danger">Delete team</a>
+                        </div>
+                </center>
+        </div>
+            </center>
     }
 }

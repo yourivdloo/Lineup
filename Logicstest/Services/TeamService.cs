@@ -18,16 +18,27 @@ namespace Logics.Services
             ITeamRepository = iTeamRepository;
         }
         
-        public async Task<List<Team>> GetTeams(Guid userId)
+        public async Task<List<Team>> GetAllTeams(Guid userId)
         {
-            List<TeamDto> TeamDtos = await ITeamRepository.GetTeams(userId);
-            List<Team> Teams = TeamDtos.ToEntity();
-            return Teams;
+            List<TeamDto> TeamDtos = await ITeamRepository.GetAllTeams(userId);
+            List<Team> teams = new List<Team>();
+            foreach (TeamDto team in TeamDtos)
+            {
+                teams.Add(team.ToEntity());
+            }
+            //List<Team> Teams = TeamDtos.ToEntity();
+            return teams;
         }
 
-        public async Task AddTeam()
+        public async Task AddTeam(Team team)
         {
-            await ITeamRepository.AddTeam();
+            TeamDto teamDto = team.ToModel();
+            await ITeamRepository.AddTeam(teamDto);
+        }
+
+        public async Task DeleteTeam(int id)
+        {
+            await ITeamRepository.DeleteTeam(id);
         }
     }
 }

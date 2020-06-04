@@ -5,21 +5,22 @@ using AutoMapper;
 using Logics.Entities;
 using Lineup.Logics.Mappers;
 using Data.Dtos;
+using Logics.Mappers;
 
 namespace Lineup.Logics.Mappers
 {
-    public static class PlayerMapper
+    public static class FormationMapper
     {
-        static PlayerMapper()
+        static FormationMapper()
         {
-            Mapper = new MapperConfiguration(cfg => { cfg.AddProfile<PlayerMapperProfile>(); }).CreateMapper();
+            Mapper = new MapperConfiguration(cfg => { cfg.AddProfile<FormationMapperProfile>(); }).CreateMapper();
         }
 
         internal static IMapper Mapper { get; }
 
-        public static Player ToEntity(this PlayerDto player)
+        public static Formation ToEntity(this FormationDto formation)
         {
-            return player == null ? null : Mapper.Map<Player>(player);
+            return formation == null ? null : Mapper.Map<Formation>(formation);
         }
 
         public static PlayerDto ToModel(this Player player)

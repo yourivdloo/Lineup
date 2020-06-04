@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Logics.Services.Interfaces
 {
-    public interface ITeamService
+    public interface IPlayerService
     {
-        Task<List<Team>> GetAllTeams(Guid userId);
-
-        Task AddTeam(Team team);
-
-        Task DeleteTeam(int id);
+        Task<List<Player>> GetAllPlayers(int teamId);
     }
 }

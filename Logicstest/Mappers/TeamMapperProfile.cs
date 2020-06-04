@@ -13,7 +13,7 @@ namespace Logics.Mappers
         {
             CreateMap<Team, TeamDto>(MemberList.Destination);
 
-            CreateMap<List<TeamDto>, List<Team>>(MemberList.Destination);
+            CreateMap<List<TeamDto>, List<Team>>(MemberList.Source);
 
             // model to entity
             CreateMap<TeamDto, Team>(MemberList.Source);

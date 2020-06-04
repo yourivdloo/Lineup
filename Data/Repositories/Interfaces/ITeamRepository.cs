@@ -8,8 +8,16 @@ namespace Data.Repositories.Interfaces
 {
     public interface ITeamRepository
     {
-        Task<List<TeamDto>> GetTeams(Guid userId);
+        Task<List<TeamDto>> GetAllTeams(Guid userId);
 
-        Task AddTeam();
+        Task AddTeam(TeamDto teamDto);
+
+        Task DeleteTeam(int teamId);
+
+        Task<TeamDto> GetTeam(int teamId);
+
+        Task<List<PlayerDto>> GetAllPlayers(int teamId);
+
+        Task<List<FormationDto>> GetAllFormations(int teamId);
     }
 }
