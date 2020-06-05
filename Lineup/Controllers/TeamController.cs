@@ -63,7 +63,7 @@ namespace Lineup.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewTeam(int teamId)
+        public async Task<IActionResult> Team(int teamId)
         {
             var players = await IPlayerService.GetAllPlayers(teamId);
             var formations = await IFormationService.GetAllFormations(teamId);

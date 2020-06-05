@@ -10,5 +10,7 @@ namespace Data.Repositories.Interfaces
     {
         Task<List<FormationDto>> GetAllFormations(int teamId);
 
+        Task<List<PlayerDto>> GetAllPlayers(int teamId);
+
     }
 }

@@ -49,6 +49,12 @@ namespace Lineup
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ITeamRepository, TeamRepository>();
 
+            services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
+
+            services.AddScoped<IFormationService, FormationService>();
+            services.AddScoped<IFormationRepository, FormationRepository>();
+
 
             services.AddControllersWithViews();
         }

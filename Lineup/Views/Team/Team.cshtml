@@ -4,7 +4,7 @@
 }
 
 <h1>My teams</h1>
-<a asp-controller="Player" asp-action="AddPlayer" class="btn btn-primary">Add formation</a>
+<a asp-controller="Player" asp-action="AddPlayer" class="btn btn-primary">Add player</a>
 <a asp-controller="Formation" asp-action="AddFormation" class="btn btn-primary">Add formation</a>
 @if (Model != null)
 {
@@ -15,6 +15,7 @@
                 <center>
                     <h2 class="card-header">@player.Name</h2>
                     <div class="card-body">
+                        <h5 class="card-text">Age: @player.Age</h5>
                         <a asp-controller="Player" asp-action="EditPlayer" asp-route-id=@player.Id class="btn btn-primary">Edit player</a>
                         <a asp-controller="Player" asp-action="DeletePlayer" asp-route-id=@player.Id class="btn btn-danger">Delete player</a>
                     </div>
@@ -30,8 +31,8 @@
                 <center>
                     <h2 class="card-header">@formation.Name</h2>
                     <div class="card-body">
-                        <a asp-controller="Player" asp-action="EditPlayer" asp-route-id=@formation.Id class="btn btn-primary">View Formation</a>
-                        <a asp-controller="Player" asp-action="DeletePlayer" asp-route-id=@formation.Id class="btn btn-danger">Delete Formation</a>
+                        <a asp-controller="Formation" asp-action="ViewFormation" asp-route-id=@formation.Id class="btn btn-primary">View Formation</a>
+                        <a asp-controller="Formation" asp-action="DeleteFormation" asp-route-id=@formation.Id class="btn btn-danger">Delete Formation</a>
                     </div>
                 </center>
             </div>

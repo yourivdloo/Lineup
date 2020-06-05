@@ -29,5 +29,16 @@ namespace Logics.Services
             return formations;
         }
 
+        public async Task<List<Player>> GetAllPlayers(int teamId)
+        {
+            List<PlayerDto> playerDtos = await IFormationRepository.GetAllPlayers(teamId);
+            List<Player> players = new List<Player>();
+            foreach (PlayerDto dto in playerDtos)
+            {
+                players.Add(dto.ToEntity());
+            }
+            return players;
+        }
+
     }
 }

@@ -23,9 +23,9 @@ namespace Lineup.Logics.Mappers
             return formation == null ? null : Mapper.Map<Formation>(formation);
         }
 
-        public static PlayerDto ToModel(this Player player)
+        public static FormationDto ToModel(this Formation formation)
         {
-            return player == null ? null : Mapper.Map<PlayerDto>(player);
+            return formation == null ? null : Mapper.Map<FormationDto>(formation);
         }
     }
 }

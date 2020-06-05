@@ -10,7 +10,7 @@ using Lineup.Logics.Mappers;
 
 namespace Logics.Services
 {
-    public class PlayerService
+    public class PlayerService : IPlayerService
     {
         private readonly IPlayerRepository IPlayerRepository;
         public PlayerService(IPlayerRepository iPlayerRepository)
@@ -29,5 +29,14 @@ namespace Logics.Services
             return players;
         }
 
+        public async Task AddPlayer(Player player)
+        {
+            await IPlayerRepository.AddPlayer(player.ToModel());
+        }
+
+        public async Task DeletePlayer(int id)
+        {
+            await IPlayerRepository.DeletePlayer(id);
+        }
     }
 }

@@ -22,5 +22,10 @@ namespace Data.Repositories
         {
             return await DBContext.Formations.AsNoTracking().Where(x => x.TeamId == teamId).ToListAsync();
         }
+
+        public async Task<List<PlayerDto>> GetAllPlayers(int teamId)
+        {
+            return await DBContext.Players.AsNoTracking().Where(x => x.TeamId == teamId).ToListAsync();
+        }
     }
 }

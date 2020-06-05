@@ -11,10 +11,7 @@ namespace Data.Dtos
         [Key] public int id { get; set; }
         public int TeamId { get; set; }
         public string Name { get; set; }
-        public Position Preference_one { get; set; }
-        public Position Preference_two { get; set; }
-        public Position Preference_three { get; set; }
-        public int Priority { get; set; }
+        public int Age { get; set; }
 
     }
 }

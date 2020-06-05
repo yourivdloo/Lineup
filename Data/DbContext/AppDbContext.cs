@@ -29,10 +29,7 @@ namespace Data.DbContext
                     {
                         id = 1,
                         Name = "Youri",
-                        Preference_one = Position.Libero,
-                        Preference_two = Position.Rightback,
-                        Preference_three = Position.Rightmidfield,
-                        Priority = 6,
+                        Age = 17,
                         TeamId = 1
                     }
                 );
