@@ -12,15 +12,16 @@ namespace Logics.Services
 {
     public class TeamService : ITeamService
     {
-        private readonly ITeamRepository ITeamRepository;
-        public TeamService(ITeamRepository iTeamRepository)
+        private readonly ITeamRepository _TeamRepository;
+
+        public TeamService(ITeamRepository teamRepository)
         {
-            ITeamRepository = iTeamRepository;
+            _TeamRepository = teamRepository;
         }
         
         public async Task<List<Team>> GetAllTeams(Guid userId)
         {
-            List<TeamDto> TeamDtos = await ITeamRepository.GetAllTeams(userId);
+            List<TeamDto> TeamDtos = await _TeamRepository.GetAllTeams(userId);
             List<Team> teams = new List<Team>();
             foreach (TeamDto team in TeamDtos)
             {
@@ -33,12 +34,23 @@ namespace Logics.Services
         public async Task AddTeam(Team team)
         {
             TeamDto teamDto = team.ToModel();
-            await ITeamRepository.AddTeam(teamDto);
+            await _TeamRepository.AddTeam(teamDto);
         }
 
         public async Task DeleteTeam(int id)
         {
-            await ITeamRepository.DeleteTeam(id);
+            await _TeamRepository.DeleteTeam(id);
+        }
+
+        public async Task<Team> GetTeam(int id)
+        {
+            TeamDto teamdto = await _TeamRepository.GetTeam(id);
+            return teamdto.ToEntity();
+        }
+
+        public async Task EditTeam(Team team)
+        {
+            await _TeamRepository.EditTeam(team.ToModel());
         }
     }
 }

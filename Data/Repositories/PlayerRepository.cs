@@ -44,9 +44,15 @@ namespace Data.Repositories
             await AutoSaveChangesAsync();
         }
 
-        public async Task<PlayerDto> GetPlayer(int id)
+        public async Task<PlayerDto> GetPlayer(int Id)
         {
-                return await DBContext.Players.AsNoTracking().Where(x => x.id == id).FirstOrDefaultAsync();
+                return await DBContext.Players.AsNoTracking().Where(x => x.id == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task EditPlayer(PlayerDto playerDto)
+        {
+            DBContext.Players.Update(playerDto);
+            await AutoSaveChangesAsync();
         }
     }
 }

@@ -15,5 +15,7 @@ namespace Data.Repositories.Interfaces
         Task DeletePlayer(int Id);
 
         Task<PlayerDto> GetPlayer(int id);
+
+        Task EditPlayer(PlayerDto playerDto);
     }
 }

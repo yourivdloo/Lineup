@@ -13,5 +13,9 @@ namespace Logics.Services.Interfaces
         Task AddTeam(Team team);
 
         Task DeleteTeam(int id);
+
+        Task<Team> GetTeam(int id);
+
+        Task EditTeam(Team team);
     }
 }

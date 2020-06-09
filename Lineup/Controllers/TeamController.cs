@@ -13,40 +13,26 @@ namespace Lineup.Controllers
     [Authorize]
     public class TeamController : Controller
     {
-        private readonly IIdentityService IIdentityService;
-        private readonly ITeamService ITeamService;
-        private readonly IPlayerService IPlayerService;
-        private readonly IFormationService IFormationService;
+        private readonly IIdentityService _IdentityService;
+        private readonly ITeamService _TeamService;
+        private readonly IPlayerService _PlayerService;
+        private readonly IFormationService _FormationService;
 
-        public TeamController(IIdentityService iIdentityService, ITeamService iTeamService, IPlayerService iPlayerService, IFormationService iFormationService)
+        public TeamController(IIdentityService identityService, ITeamService teamService, IPlayerService playerService, IFormationService formationService)
         {
-            IIdentityService = iIdentityService;
-            ITeamService = iTeamService;
-            IPlayerService = iPlayerService;
-            IFormationService = iFormationService;
+            _IdentityService = identityService;
+            _TeamService = teamService;
+            _PlayerService = playerService;
+            _FormationService = formationService;
         }
 
         [HttpGet]
         public async Task<IActionResult> AccountHome()
         {
             var userClaims = HttpContext.User;
-            var user = await IIdentityService.GetUserAsync(userClaims.Identity.Name);
-            var model = await ITeamService.GetAllTeams(user.Id);
+            var user = await _IdentityService.GetUserAsync(userClaims.Identity.Name);
+            var model = await _TeamService.GetAllTeams(user.Id);
             return View(new AccountHomeViewModel { Teams = model });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddTeam(AddTeamViewModel model)
-        {
-            var userClaims = HttpContext.User;
-            var user = await IIdentityService.GetUserAsync(userClaims.Identity.Name);
-            Team team = new Team()
-            {
-                UserId = user.Id,
-                Name = model.TeamName
-            };
-            await ITeamService.AddTeam(team);
-            return RedirectToAction(nameof(AccountHome));
         }
 
         [HttpGet]
@@ -55,19 +41,56 @@ namespace Lineup.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DeleteTeam(int teamId)
+        [HttpPost]
+        public async Task<IActionResult> AddTeam(TeamViewModel model)
         {
-            await ITeamService.DeleteTeam(teamId);
+            var userClaims = HttpContext.User;
+            var user = await _IdentityService.GetUserAsync(userClaims.Identity.Name);
+            Team team = new Team()
+            {
+                UserId = user.Id,
+                Name = model.Name
+            };
+            await _TeamService.AddTeam(team);
             return RedirectToAction(nameof(AccountHome));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Team(int teamId)
+        public async Task<IActionResult> DeleteTeam(int id)
         {
-            var players = await IPlayerService.GetAllPlayers(teamId);
-            var formations = await IFormationService.GetAllFormations(teamId);
-            return View(new TeamViewModel { Players = players, Formations = formations });
+            await _TeamService.DeleteTeam(id);
+            return RedirectToAction(nameof(AccountHome));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TeamHome(int id)
+        {
+            var team = await _TeamService.GetTeam(id);
+            var players = await _PlayerService.GetAllPlayers(id);
+            var formations = await _FormationService.GetAllFormations(id);
+            return View(new TeamHomeViewModel { Id = id, Players = players, Formations = formations, Name = team.Name  });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditTeam(int id)
+        {
+            Team team = await _TeamService.GetTeam(id);
+            return View(new TeamViewModel() { Name = team.Name, Id = team.Id});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditTeam(TeamViewModel model)
+        {
+            var userClaims = HttpContext.User;
+            var user = await _IdentityService.GetUserAsync(userClaims.Identity.Name);
+            Team team = new Team()
+            {
+                Name = model.Name,
+                Id = model.Id,
+                UserId = user.Id
+            };
+            await _TeamService.EditTeam(team);
+            return RedirectToAction(nameof(AccountHome));
         }
     }
 }

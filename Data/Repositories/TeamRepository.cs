@@ -38,16 +38,14 @@ namespace Data.Repositories
             return await DBContext.SaveChangesAsync();
         }
 
-
-
         private async Task<int> AutoSaveChangesAsync()
         {
             return AutoSaveChanges ? await DBContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
         }
 
-        public async Task DeleteTeam(int teamId)
+        public async Task DeleteTeam(int id)
         {
-            TeamDto teamDto = await GetTeam(teamId);
+            TeamDto teamDto = await GetTeam(id);
             DBContext.Remove(teamDto);
             await AutoSaveChangesAsync();
         }
@@ -55,6 +53,12 @@ namespace Data.Repositories
         public async Task<TeamDto> GetTeam(int teamId)
         {
             return await DBContext.Teams.AsNoTracking().Where(x => x.Id == teamId).FirstOrDefaultAsync();
+        }
+
+        public async Task EditTeam(TeamDto teamDto)
+        {
+            DBContext.Teams.Update(teamDto);
+            await AutoSaveChangesAsync();
         }
 
         public async Task<List<PlayerDto>> GetAllPlayers(int teamId)

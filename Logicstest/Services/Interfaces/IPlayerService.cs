@@ -12,6 +12,10 @@ namespace Logics.Services.Interfaces
 
         Task AddPlayer(Player player);
 
-        Task DeletePlayer(int Id);
+        Task DeletePlayer(int id);
+
+        Task EditPlayer(Player player);
+
+        Task<Player> GetPlayer(int Id);
     }
 }

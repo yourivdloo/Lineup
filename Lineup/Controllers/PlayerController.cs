@@ -13,42 +13,57 @@ namespace Lineup.Controllers
     [Authorize]
     public class PlayerController : Controller
     {
-        private readonly IPlayerService IPlayerService;
+        private readonly IPlayerService _PlayerService;
 
-        public PlayerController(IPlayerService iPlayerService)
+        public PlayerController(IPlayerService playerService)
         {
-            IPlayerService = iPlayerService;
+            _PlayerService = playerService;
         }
 
         [HttpGet]
-        public IActionResult AddPlayer()
+        public IActionResult AddPlayer(int id)
         {
-            return View();
+            return View(new PlayerViewModel() { TeamId = id});
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPlayer(AddPlayerViewModel model)
+        public async Task<IActionResult> AddPlayer(PlayerViewModel model)
         {
             Player player = new Player()
             {
                 Name = model.Name,
-                Age = model.Age
+                Age = model.Age,
+                TeamId = model.TeamId
             };
-            await IPlayerService.AddPlayer(player);
-            return RedirectToAction("Team", "Team");
+            await _PlayerService.AddPlayer(player);
+            return RedirectToAction("TeamHome", "Team", new { id = model.TeamId});
         }
 
         [HttpGet]
-        public IActionResult EditPlayer()
+        public async Task<IActionResult> EditPlayer(int id)
         {
-            return View();
+            Player player = await _PlayerService.GetPlayer(id);
+            return View(new PlayerViewModel() { Name = player.Name, Age = player.Age, PlayerId = player.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPlayer(PlayerViewModel model)
+        {
+            Player player = new Player()
+            {
+                Name = model.Name,
+                Age = model.Age,
+                Id = model.PlayerId
+            };
+            await _PlayerService.EditPlayer(player);
+            return RedirectToAction("Team", "Team");
         }
 
         [HttpGet]
         public async Task<IActionResult> DeletePlayer(int Id)
         {
-            await IPlayerService.DeletePlayer(Id);
-            return RedirectToAction("Team", "Team");
+            await _PlayerService.DeletePlayer(Id);
+            return RedirectToAction("TeamHome", "Team");
         }
     }
 }

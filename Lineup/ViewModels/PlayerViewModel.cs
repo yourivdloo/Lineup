@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace Lineup.ViewModels
 {
-    public class AddPlayerViewModel
+    public class PlayerViewModel
     {
         [Required]
         public string Name { get; set; }
 
         public int Age { get; set; }
+
+        public int PlayerId { get; set; }
+
+        public int TeamId { get; set; }
     }
 }

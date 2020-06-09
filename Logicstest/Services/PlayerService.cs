@@ -5,24 +5,23 @@ using Logics.Services.Interfaces;
 using Data.Repositories.Interfaces;
 using System.Threading.Tasks;
 using Logics.Entities;
-using Data.Dtos;
 using Lineup.Logics.Mappers;
 
 namespace Logics.Services
 {
     public class PlayerService : IPlayerService
     {
-        private readonly IPlayerRepository IPlayerRepository;
-        public PlayerService(IPlayerRepository iPlayerRepository)
+        private readonly IPlayerRepository _PlayerRepository;
+        public PlayerService(IPlayerRepository playerRepository)
         {
-            IPlayerRepository = iPlayerRepository;
+            _PlayerRepository = playerRepository;
         }
 
         public async Task<List<Player>> GetAllPlayers(int teamId)
         {
-            List<PlayerDto> playerDtos = await IPlayerRepository.GetAllPlayers(teamId);
-            List<Player> players = new List<Player>();
-            foreach (PlayerDto dto in playerDtos)
+            var playerDtos = await _PlayerRepository.GetAllPlayers(teamId);
+            var players = new List<Player>();
+            foreach (var dto in playerDtos)
             {
                 players.Add(dto.ToEntity());
             }
@@ -31,12 +30,23 @@ namespace Logics.Services
 
         public async Task AddPlayer(Player player)
         {
-            await IPlayerRepository.AddPlayer(player.ToModel());
+            await _PlayerRepository.AddPlayer(player.ToModel());
         }
 
         public async Task DeletePlayer(int id)
         {
-            await IPlayerRepository.DeletePlayer(id);
+            await _PlayerRepository.DeletePlayer(id);
+        }
+
+        public async Task EditPlayer(Player player)
+        {
+            await _PlayerRepository.EditPlayer(player.ToModel());
+        }
+
+        public async Task<Player> GetPlayer(int Id)
+        {
+            var playerDto = await _PlayerRepository.GetPlayer(Id);
+            return (playerDto.ToEntity());
         }
     }
 }

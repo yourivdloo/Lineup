@@ -1,11 +1,11 @@
-﻿@model TeamViewModel
+﻿@model TeamHomeViewModel
 @{
     ViewData["Title"] = "";
 }
 
-<h1>My teams</h1>
-<a asp-controller="Player" asp-action="AddPlayer" class="btn btn-primary">Add player</a>
-<a asp-controller="Formation" asp-action="AddFormation" class="btn btn-primary">Add formation</a>
+<h1>@Model.Name</h1>
+<a asp-controller="Player" asp-action="AddPlayer" asp-route-id=@Model.Id class="btn btn-primary">Add player</a>
+<a asp-controller="Formation" asp-action="AddFormation" asp-route-id=@Model.Id class="btn btn-primary">Add formation</a>
 @if (Model != null)
 {
     foreach (var player in Model.Players)

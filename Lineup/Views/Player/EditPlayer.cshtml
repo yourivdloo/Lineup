@@ -1,0 +1,22 @@
+﻿@model PlayerViewModel
+
+@{
+    ViewData["Title"] = "Edit player";
+}
+
+<h1>Edit player</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" value=@Model.Name/>
+                <label asp-for="Age"></label>
+                <input asp-for="Age" class="form-control" value=@Model.Age/>
+                <input type="hidden" asp-for="PlayerId" value=@Model.PlayerId />
+            </div>
+            <button type="submit" class="btn btn-primary">Edit player</button>
+        </form>
+    </div>
+</div>

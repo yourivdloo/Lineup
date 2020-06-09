@@ -1,4 +1,4 @@
-﻿@model AddPlayerViewModel
+﻿@model PlayerViewModel
 
 @{
     ViewData["Title"] = "Add player";
@@ -14,6 +14,7 @@
                 <input asp-for="Name" class="form-control" />
                 <label asp-for="Age"></label>
                 <input asp-for="Age" class="form-control" />
+                <input type="hidden" asp-for="TeamId" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary">Add player</button>
         </form>

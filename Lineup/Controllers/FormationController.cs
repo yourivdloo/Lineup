@@ -13,17 +13,20 @@ namespace Lineup.Controllers
     [Authorize]
     public class FormationController : Controller
     {
-        private readonly IFormationService IFormationService;
-        
-        public FormationController(IFormationService iFormationService)
+        private readonly IFormationService _FormationService;
+        private readonly IPlayerService _PlayerService;
+
+        public FormationController(IFormationService formationService, IPlayerService playerService)
         {
-            IFormationService = iFormationService;
+            _FormationService = formationService;
+            _PlayerService = playerService;
         }
 
         [HttpGet]
-        public IActionResult AddFormation()
+        public async Task<IActionResult> AddFormation(int teamId)
         {
-            return View();
+            List<Player> players = await _PlayerService.GetAllPlayers(teamId);
+            return View(new AddFormationViewModel { Players = players });
         }
 
         [HttpPost]
