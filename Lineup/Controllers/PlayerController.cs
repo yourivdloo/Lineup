@@ -21,9 +21,9 @@ namespace Lineup.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddPlayer(int id)
+        public IActionResult AddPlayer(int teamId)
         {
-            return View(new PlayerViewModel() { TeamId = id});
+            return View(new PlayerViewModel() { TeamId = teamId});
         }
 
         [HttpPost]
@@ -40,10 +40,10 @@ namespace Lineup.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditPlayer(int id)
+        public async Task<IActionResult> EditPlayer(int id, int teamId)
         {
             Player player = await _PlayerService.GetPlayer(id);
-            return View(new PlayerViewModel() { Name = player.Name, Age = player.Age, PlayerId = player.Id });
+            return View(new PlayerViewModel() { Name = player.Name, Age = player.Age, PlayerId = player.Id, TeamId = teamId });
         }
 
         [HttpPost]
@@ -53,17 +53,18 @@ namespace Lineup.Controllers
             {
                 Name = model.Name,
                 Age = model.Age,
-                Id = model.PlayerId
+                Id = model.PlayerId,
+                TeamId = model.TeamId
             };
             await _PlayerService.EditPlayer(player);
-            return RedirectToAction("Team", "Team");
+            return RedirectToAction("TeamHome", "Team", new {id = model.TeamId });
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeletePlayer(int Id)
+        public async Task<IActionResult> DeletePlayer(int id, int teamId)
         {
-            await _PlayerService.DeletePlayer(Id);
-            return RedirectToAction("TeamHome", "Team");
+            await _PlayerService.DeletePlayer(id);
+            return RedirectToAction("TeamHome", "Team", new { id = teamId });
         }
     }
 }

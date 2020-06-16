@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(LineupDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -143,10 +143,10 @@ namespace Data.Migrations
                     b.Property<int>("FormationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("position")
                         .HasColumnType("int");
 
                     b.HasKey("id");

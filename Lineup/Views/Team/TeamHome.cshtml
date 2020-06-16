@@ -4,38 +4,43 @@
 }
 
 <h1>@Model.Name</h1>
-<a asp-controller="Player" asp-action="AddPlayer" asp-route-id=@Model.Id class="btn btn-primary">Add player</a>
-<a asp-controller="Formation" asp-action="AddFormation" asp-route-id=@Model.Id class="btn btn-primary">Add formation</a>
+<div class="center">
+<a asp-controller="Player" asp-action="AddPlayer" asp-route-teamId=@Model.Id class="btn btn-primary">Add player</a>
+<a asp-controller="Formation" asp-action="AddFormation" asp-route-teamId=@Model.Id class="btn btn-primary">Add formation</a>
+    </div>
 @if (Model != null)
 {
-    foreach (var player in Model.Players)
+    <div class="float-left w-50 mb-md-5">
+    @foreach (var player in Model.Players)
     {
         <center>
-            <div class="card" style="width:30%">
+            <div class="card w-100" style="width:30%">
                 <center>
                     <h2 class="card-header">@player.Name</h2>
                     <div class="card-body">
                         <h5 class="card-text">Age: @player.Age</h5>
-                        <a asp-controller="Player" asp-action="EditPlayer" asp-route-id=@player.Id class="btn btn-primary">Edit player</a>
-                        <a asp-controller="Player" asp-action="DeletePlayer" asp-route-id=@player.Id class="btn btn-danger">Delete player</a>
+                        <a asp-controller="Player" asp-action="EditPlayer" asp-route-id=@player.Id asp-route-teamId="@Model.Id" class="btn btn-primary">Edit player</a>
+                        <a asp-controller="Player" asp-action="DeletePlayer" asp-route-id=@player.Id asp-route-teamId="@Model.Id" class="btn btn-danger">Delete player</a>
                     </div>
                 </center>
             </div>
         </center>
     }
-
-    foreach (var formation in Model.Formations)
+        </div>
+    <div class="float-right w-50 mb-md-5">
+    @foreach (var formation in Model.Formations)
     {
         <center>
-            <div class="card" style="width:30%">
+            <div class="card w-100" style="width:30%">
                 <center>
                     <h2 class="card-header">@formation.Name</h2>
                     <div class="card-body">
-                        <a asp-controller="Formation" asp-action="ViewFormation" asp-route-id=@formation.Id class="btn btn-primary">View Formation</a>
-                        <a asp-controller="Formation" asp-action="DeleteFormation" asp-route-id=@formation.Id class="btn btn-danger">Delete Formation</a>
+                        <a asp-controller="Formation" asp-action="Formation" asp-route-id=@formation.Id class="btn btn-primary">View Formation</a>
+                        <a asp-controller="Formation" asp-action="DeleteFormation" asp-route-id=@formation.Id asp-route-teamId="@Model.Id" class="btn btn-danger">Delete Formation</a>
                     </div>
                 </center>
             </div>
         </center>
     }
+        </div>
 }

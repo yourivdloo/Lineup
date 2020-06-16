@@ -43,9 +43,9 @@ namespace Logics.Services
             await _PlayerRepository.EditPlayer(player.ToModel());
         }
 
-        public async Task<Player> GetPlayer(int Id)
+        public async Task<Player> GetPlayer(int id)
         {
-            var playerDto = await _PlayerRepository.GetPlayer(Id);
+            var playerDto = await _PlayerRepository.GetPlayer(id);
             return (playerDto.ToEntity());
         }
     }

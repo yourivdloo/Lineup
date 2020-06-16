@@ -7,7 +7,7 @@ namespace Logics.Entities
     public class Formation
     {
         public int Id { get; set; }
+        public int TeamId { get; set; }
         public string Name { get; set; }
-        public List<PlayerPosition> Players { get; set; }
     }
 }

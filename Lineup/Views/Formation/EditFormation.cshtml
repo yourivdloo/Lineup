@@ -1,0 +1,50 @@
+﻿@using Logics.Services.Interfaces;
+@using Logics.Entities;
+@inject IPlayerService _playerService;
+@model FormationViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+
+@if (Model != null)
+{
+<form method="post">
+    <button type="submit" class="btn btn-primary">Edit Formation</button>
+    <label>Team name:</label>
+    <input asp-for="Name" class="form-control" />
+    @foreach (var pp in Model.PlayerPositions)
+    {
+        Player player = await _playerService.GetPlayer(pp.PlayerId);
+        <center>
+            <div class="card" style="width:30%">
+                <center>
+                    <h2 class="card-header">@player.Name</h2>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label>Position:</label>
+                        <select name="@player.Id">
+                            @foreach (var position in Model.Positions)
+                            {
+                                @if (pp.Position == position)
+                                {
+                                    <option selected>@position</option>
+                                }
+                                else
+                                {
+                                    <option>@position</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+                </center>
+            </div>
+        </center>
+    }
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="TeamId" />
+</form>
+}

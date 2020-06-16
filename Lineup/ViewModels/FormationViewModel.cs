@@ -4,16 +4,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Logics.Entities;
+using Data.Enums;
 
 namespace Lineup.ViewModels
 {
-    public class AddFormationViewModel
+    public class FormationViewModel
     {
         [Required]
         public string Name { get; set; }
 
+        public int Id { get; set; }
+
+        public int TeamId { get; set; }
+
         public List<PlayerPosition> PlayerPositions { get; set; }
 
         public List<Player> Players { get; set; }
+
+        public List<Position> Positions { get; set; }
     }
 }

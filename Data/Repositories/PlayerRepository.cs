@@ -13,10 +13,9 @@ namespace Data.Repositories
 {
     public class PlayerRepository : IPlayerRepository
     {
-        private readonly AppDbContext DBContext;
-        private bool AutoSaveChanges { get; } = true;
+        private readonly LineupDbContext DBContext;
 
-        public PlayerRepository(AppDbContext dBContext)
+        public PlayerRepository(LineupDbContext dBContext)
         {
             DBContext = dBContext;
         }
@@ -29,30 +28,25 @@ namespace Data.Repositories
         public async Task AddPlayer(PlayerDto playerDto)
         {
             DBContext.Players.Add(playerDto);
-            await AutoSaveChangesAsync();
+            await DBContext.SaveChangesAsync();
         }
 
-        private async Task<int> AutoSaveChangesAsync()
+        public async Task DeletePlayer(int id)
         {
-            return AutoSaveChanges ? await DBContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
-        }
-
-        public async Task DeletePlayer(int Id)
-        {
-            PlayerDto playerDto = await GetPlayer(Id);
+            PlayerDto playerDto = await GetPlayer(id);
             DBContext.Remove(playerDto);
-            await AutoSaveChangesAsync();
+            await DBContext.SaveChangesAsync();
         }
 
-        public async Task<PlayerDto> GetPlayer(int Id)
+        public async Task<PlayerDto> GetPlayer(int id)
         {
-                return await DBContext.Players.AsNoTracking().Where(x => x.id == Id).FirstOrDefaultAsync();
+            return await DBContext.Players.AsNoTracking().Where(x => x.id == id).FirstOrDefaultAsync();
         }
 
         public async Task EditPlayer(PlayerDto playerDto)
         {
             DBContext.Players.Update(playerDto);
-            await AutoSaveChangesAsync();
+            await DBContext.SaveChangesAsync();
         }
     }
 }

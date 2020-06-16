@@ -12,7 +12,7 @@ namespace Data.Repositories.Interfaces
 
         Task AddPlayer(PlayerDto playerDto);
 
-        Task DeletePlayer(int Id);
+        Task DeletePlayer(int id);
 
         Task<PlayerDto> GetPlayer(int id);
 

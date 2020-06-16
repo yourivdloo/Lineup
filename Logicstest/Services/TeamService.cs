@@ -27,7 +27,6 @@ namespace Logics.Services
             {
                 teams.Add(team.ToEntity());
             }
-            //List<Team> Teams = TeamDtos.ToEntity();
             return teams;
         }
 
@@ -45,7 +44,7 @@ namespace Logics.Services
         public async Task<Team> GetTeam(int id)
         {
             TeamDto teamdto = await _TeamRepository.GetTeam(id);
-            return teamdto.ToEntity();
+            return (teamdto.ToEntity());
         }
 
         public async Task EditTeam(Team team)

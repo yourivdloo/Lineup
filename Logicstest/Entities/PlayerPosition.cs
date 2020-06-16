@@ -7,7 +7,12 @@ namespace Logics.Entities
 {
     public class PlayerPosition
     {
+        public int Id { get; set; }
+
+        public int FormationId { get; set; }
+
         public Position Position { get; set; }
-        public Player Player { get; set; }
+
+        public int PlayerId { get; set; }
     }
 }

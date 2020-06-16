@@ -16,6 +16,6 @@ namespace Logics.Services.Interfaces
 
         Task EditPlayer(Player player);
 
-        Task<Player> GetPlayer(int Id);
+        Task<Player> GetPlayer(int id);
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(LineupDbContext))]
     [Migration("20200602110742_AddingUserId")]
     partial class AddingUserId
     {

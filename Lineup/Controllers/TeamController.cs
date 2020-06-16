@@ -31,8 +31,8 @@ namespace Lineup.Controllers
         {
             var userClaims = HttpContext.User;
             var user = await _IdentityService.GetUserAsync(userClaims.Identity.Name);
-            var model = await _TeamService.GetAllTeams(user.Id);
-            return View(new AccountHomeViewModel { Teams = model });
+            var teams = await _TeamService.GetAllTeams(user.Id);
+            return View(new AccountHomeViewModel { Teams = teams });
         }
 
         [HttpGet]

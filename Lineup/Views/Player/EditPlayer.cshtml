@@ -15,6 +15,7 @@
                 <label asp-for="Age"></label>
                 <input asp-for="Age" class="form-control" value=@Model.Age/>
                 <input type="hidden" asp-for="PlayerId" value=@Model.PlayerId />
+                <input type="hidden" asp-for="TeamId" value="@Model.TeamId" />
             </div>
             <button type="submit" class="btn btn-primary">Edit player</button>
         </form>

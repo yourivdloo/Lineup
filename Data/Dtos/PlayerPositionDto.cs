@@ -11,7 +11,7 @@ namespace Data.Dtos
         [Key] public int id { get; set; }
         public int FormationId { get; set; }
         public int PlayerId { get; set; }
-        public string Name { get; set; }
+        public Position position { get; set; }
 
     }
 }

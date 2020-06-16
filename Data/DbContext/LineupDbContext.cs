@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Data.DbContext
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUserDto, IdentityRole<Guid>, Guid>
+    public class LineupDbContext : IdentityDbContext<ApplicationUserDto, IdentityRole<Guid>, Guid>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public LineupDbContext(DbContextOptions<LineupDbContext> options) : base(options)
         {
 
         }

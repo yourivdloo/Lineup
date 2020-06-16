@@ -13,11 +13,9 @@ namespace Data.Repositories
 {
     public class TeamRepository : ITeamRepository
     {
-        private readonly AppDbContext DBContext;
+        private readonly LineupDbContext DBContext;
 
-        private bool AutoSaveChanges { get; } = true;
-
-        public TeamRepository(AppDbContext dBContext)
+        public TeamRepository(LineupDbContext dBContext)
         {
             DBContext = dBContext;
         }
@@ -30,24 +28,14 @@ namespace Data.Repositories
         public async Task AddTeam(TeamDto teamDto)
         {
             DBContext.Teams.Add(teamDto);
-            await AutoSaveChangesAsync();
-        }
-
-        public virtual async Task<int> SaveAllChangesAsync()
-        {
-            return await DBContext.SaveChangesAsync();
-        }
-
-        private async Task<int> AutoSaveChangesAsync()
-        {
-            return AutoSaveChanges ? await DBContext.SaveChangesAsync() : (int)SavedStatus.WillBeSavedExplicitly;
+            await DBContext.SaveChangesAsync();
         }
 
         public async Task DeleteTeam(int id)
         {
             TeamDto teamDto = await GetTeam(id);
             DBContext.Remove(teamDto);
-            await AutoSaveChangesAsync();
+            await DBContext.SaveChangesAsync();
         }
 
         public async Task<TeamDto> GetTeam(int teamId)
@@ -58,7 +46,7 @@ namespace Data.Repositories
         public async Task EditTeam(TeamDto teamDto)
         {
             DBContext.Teams.Update(teamDto);
-            await AutoSaveChangesAsync();
+            await DBContext.SaveChangesAsync();
         }
 
         public async Task<List<PlayerDto>> GetAllPlayers(int teamId)

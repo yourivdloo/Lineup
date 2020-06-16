@@ -1,0 +1,30 @@
+﻿@using Logics.Services.Interfaces;
+@using Logics.Entities;
+@inject IPlayerService _playerService; 
+@model FormationViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+
+@if (Model != null)
+{
+    <a asp-controller="Formation" asp-action="EditFormation" asp-route-id=@Model.Id class="btn btn-primary">Edit formation</a>
+    @foreach (var pp in Model.PlayerPositions)
+    {
+        Player Player = await _playerService.GetPlayer(pp.PlayerId);
+        <center>
+            <div class="card" style="width:30%">
+                <center>
+                    <h2 class="card-header">@Player.Name</h2>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label>Position: @pp.Position.ToString()</label>
+                    </div>
+                </center>
+            </div>
+        </center>
+    }
+}

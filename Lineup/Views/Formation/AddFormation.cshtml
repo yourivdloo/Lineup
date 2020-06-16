@@ -1,4 +1,4 @@
-﻿@model AddFormationViewModel
+﻿@model FormationViewModel
 
 @{
     ViewData["Title"] = "Add formation";
@@ -9,7 +9,7 @@
 @if (Model != null)
 {
     <form method="post">
-        <label>Team name</label>
+        <label>Formation name</label>
         <input asp-for="Name" class="form-control"/>
     @foreach (var player in Model.Players)
     {
@@ -19,13 +19,19 @@
                     <h2 class="card-header">@player.Name</h2>
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
-                        <label>Position</label>
-                        <input asp-for="PlayerPositions" class="form-control" />
+                        <label>Position:</label>
+                        <select name="@player.Id">
+                            @foreach (var position in Model.Positions)
+                            {
+                                <option>@position</option>
+                            }
+                        </select>
                     </div>
                 </center>
             </div>
         </center>
     }
+    <input type="hidden" asp-for="TeamId" />
     <button type="submit" class="btn btn-primary">Add Formation</button>
         </form>
 }

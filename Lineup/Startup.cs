@@ -33,7 +33,7 @@ namespace Lineup
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<AppDbContext>(
+            services.AddDbContextPool<LineupDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
 
             services.AddIdentity<ApplicationUserDto, IdentityRole<Guid>>(options =>
@@ -41,7 +41,7 @@ namespace Lineup
                 options.Password.RequiredUniqueChars = 3;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<AppDbContext>();
+            }).AddEntityFrameworkStores<LineupDbContext>();
 
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IIdentityRepository, IdentityRepository>();
