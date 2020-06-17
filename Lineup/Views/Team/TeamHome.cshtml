@@ -5,9 +5,10 @@
 
 <h1>@Model.Name</h1>
 <div class="center">
-<a asp-controller="Player" asp-action="AddPlayer" asp-route-teamId=@Model.Id class="btn btn-primary">Add player</a>
-<a asp-controller="Formation" asp-action="AddFormation" asp-route-teamId=@Model.Id class="btn btn-primary">Add formation</a>
-    </div>
+    <a asp-controller="Player" asp-action="AddPlayer" asp-route-teamId=@Model.Id class="btn btn-primary">Add player</a>
+    <a asp-controller="Formation" asp-action="AddFormation" asp-route-teamId=@Model.Id class="btn btn-primary">Add formation</a>
+    <p class="text-danger">@ViewBag.ErrorMessage</p>
+</div>
 @if (Model != null)
 {
     <div class="float-left w-50 mb-md-5">

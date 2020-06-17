@@ -8,7 +8,7 @@ namespace Lineup.ViewModels
 {
     public class TeamViewModel
     {
-       [Required]
+        [Required]
         public string Name { get; set; }
 
         public int Id { get; set; }

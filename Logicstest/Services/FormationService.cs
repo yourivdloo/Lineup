@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Logics.Entities;
 using Data.Dtos;
 using Lineup.Logics.Mappers;
+using Data.Enums;
 
 namespace Logics.Services
 {
@@ -71,6 +72,33 @@ namespace Logics.Services
         {
             FormationDto formationDto = await _formationRepository.GetFormation(id);
             return (formationDto.ToEntity());
+        }
+
+        public List<string> CheckFormation(List<Position> positions)
+        {
+            List<Position> fieldPlayers = new List<Position>();
+            List<Position> goalkeepers = new List<Position>();
+            List<string> errors = new List<string>();
+            foreach (var position in positions)
+            {
+                if (position != Position.Substitute)
+                {
+                    fieldPlayers.Add(position);
+                }
+                if (position == Position.Goalkeeper)
+                {
+                    goalkeepers.Add(position);
+                }
+            }
+            if (fieldPlayers.Count != 11)
+            {
+                errors.Add("You need exactly 11 field players");
+            }
+            if (goalkeepers.Count != 1)
+            {
+                errors.Add("You need exactly 1 goalkeeper");
+            }
+            return errors;
         }
 
     }

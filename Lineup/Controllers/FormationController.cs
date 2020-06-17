@@ -26,45 +26,67 @@ namespace Lineup.Controllers
         [HttpGet]
         public async Task<IActionResult> AddFormation(int teamId)
         {
-            //check if the team has at least 11 players
-            List<Position> positions = new List<Position>();
             List<Player> players = new List<Player>();
-            foreach (Position position in Enum.GetValues(typeof(Position)))
-            {
-                positions.Add(position);
-            }
             players = await _PlayerService.GetAllPlayers(teamId);
-            return View(new FormationViewModel { Players = players, Positions = positions, TeamId = teamId});
+
+            //check if the team has at least 11 players
+            if (players.Count >= 11)
+            {
+                List<Position> positions = new List<Position>();
+                foreach (Position position in Enum.GetValues(typeof(Position)))
+                {
+                    positions.Add(position);
+                }
+                return View(new FormationViewModel { Players = players, Positions = positions, TeamId = teamId });
+            }
+            return RedirectToAction("Teamhome", "Team", new { id = teamId });
         }
 
         [HttpPost]
         public async Task<IActionResult> AddFormation(FormationViewModel model)
         {
+            List<Player> players = await _PlayerService.GetAllPlayers(model.TeamId);
+            model.Players = players;
+            model.Positions = GetAllPositions();
+
             if (ModelState.IsValid)
             {
-                List<Player> players = await _PlayerService.GetAllPlayers(model.TeamId);
-                Formation formation = new Formation()
-                {
-                    Name = model.Name,
-                    TeamId = model.TeamId
-                };
-                int id = await _FormationService.AddFormation(formation);
+                List<Position> submittedPositions = new List<Position>();
                 foreach (var player in players)
                 {
                     Position position = (Position)Enum.Parse(typeof(Position), Request.Form[player.Id.ToString()], true);
-                    PlayerPosition pp = new PlayerPosition()
-                    {
-                        PlayerId = player.Id,
-                        Position = position,
-                        FormationId = id
-                    };
-                    await _FormationService.AddPlayerPosition(pp);
+                    submittedPositions.Add(position);
+                    
                 }
-
-                //check if there are exactly 11 field players, check if there is not more than 1 goalkeeper
-
-
-                return RedirectToAction("TeamHome", "Team", new { id = model.TeamId });
+                var errors = _FormationService.CheckFormation(submittedPositions);
+                //check if there are exactly 11 field players and only 1 keeper
+                if (errors.Count == 0)
+                {
+                        Formation formation = new Formation()
+                        {
+                            Name = model.Name,
+                            TeamId = model.TeamId
+                        };
+                        int id = await _FormationService.AddFormation(formation);
+                        foreach (var player in players)
+                        {
+                            Position position = (Position)Enum.Parse(typeof(Position), Request.Form[player.Id.ToString()], true);
+                            PlayerPosition pp = new PlayerPosition()
+                            {
+                                PlayerId = player.Id,
+                                Position = position,
+                                FormationId = id
+                            };
+                            await _FormationService.AddPlayerPosition(pp);
+                        }
+                        return RedirectToAction("TeamHome", "Team", new { id = model.TeamId });
+                }
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+                
+                return View(model);
             }
             return View(model);
         }
@@ -100,29 +122,64 @@ namespace Lineup.Controllers
         [HttpPost]
         public async Task<IActionResult> EditFormation(FormationViewModel model)
         {
-            Formation formation = new Formation()
-            {
-                Id = model.Id,
-                TeamId = model.TeamId,
-                Name = model.Name
-            };
-
-            await _FormationService.EditFormation(formation);
             List<PlayerPosition> playerPositions = await _FormationService.GetAllPlayerPositions(model.Id);
-            foreach (var pp in playerPositions)
+            model.PlayerPositions = playerPositions;
+            model.Positions = GetAllPositions();
+            if (ModelState.IsValid)
             {
-                Position position = (Position)Enum.Parse(typeof(Position), Request.Form[pp.PlayerId.ToString()], true);
-                PlayerPosition playerPosition = new PlayerPosition()
+                List<Player> players = await _PlayerService.GetAllPlayers(model.TeamId);
+                List<Position> submittedPositions = new List<Position>();
+                foreach (var player in players)
                 {
-                    Id = pp.Id,
-                    PlayerId = pp.PlayerId,
-                    Position = position,
-                    FormationId = model.Id
+                    Position position = (Position)Enum.Parse(typeof(Position), Request.Form[player.Id.ToString()], true);
+                    submittedPositions.Add(position);
 
-                };
-                await _FormationService.EditPlayerPosition(playerPosition);
+                }
+                var errors = _FormationService.CheckFormation(submittedPositions);
+
+                if (errors.Count == 0)
+                {
+                    Formation formation = new Formation()
+                    {
+                        Id = model.Id,
+                        TeamId = model.TeamId,
+                        Name = model.Name
+                    };
+                    await _FormationService.EditFormation(formation);
+
+                    foreach (var pp in playerPositions)
+                    {
+                        Position position = (Position)Enum.Parse(typeof(Position), Request.Form[pp.PlayerId.ToString()], true);
+                        PlayerPosition playerPosition = new PlayerPosition()
+                        {
+                            Id = pp.Id,
+                            PlayerId = pp.PlayerId,
+                            Position = position,
+                            FormationId = model.Id
+
+                        };
+                        await _FormationService.EditPlayerPosition(playerPosition);
+                    }
+                    return RedirectToAction("TeamHome", "Team", new { id = model.TeamId });
+                }
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+
+                return View(model);
             }
-            return RedirectToAction("TeamHome", "Team", new { id = model.TeamId });
+            return View(model);
+        }
+
+        public List<Position> GetAllPositions()
+        {
+            List<Position> positions = new List<Position>();
+            foreach (Position position in Enum.GetValues(typeof(Position)))
+            {
+                positions.Add(position);
+            }
+            return positions;
         }
     }
 }

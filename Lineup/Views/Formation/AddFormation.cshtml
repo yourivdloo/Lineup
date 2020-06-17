@@ -8,30 +8,30 @@
 
 @if (Model != null)
 {
+    <div asp-validation-summary="All" class="text-danger"></div>
     <form method="post">
         <label>Formation name</label>
-        <input asp-for="Name" class="form-control"/>
-    @foreach (var player in Model.Players)
-    {
-        <center>
-            <div class="card" style="width:30%">
-                <center>
-                    <h2 class="card-header">@player.Name</h2>
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="form-group">
-                        <label>Position:</label>
-                        <select name="@player.Id">
-                            @foreach (var position in Model.Positions)
-                            {
-                                <option>@position</option>
-                            }
-                        </select>
-                    </div>
-                </center>
-            </div>
-        </center>
-    }
-    <input type="hidden" asp-for="TeamId" />
-    <button type="submit" class="btn btn-primary">Add Formation</button>
-        </form>
+        <input asp-for="Name" class="form-control" />
+        @foreach (var player in Model.Players)
+        {
+            <center>
+                <div class="card" style="width:30%">
+                    <center>
+                        <h2 class="card-header">@player.Name</h2>
+                        <div class="form-group">
+                            <label>Position:</label>
+                            <select name="@player.Id">
+                                @foreach (var position in Model.Positions)
+                                {
+                                    <option>@position</option>
+                                }
+                            </select>
+                        </div>
+                    </center>
+                </div>
+            </center>
+        }
+        <input type="hidden" asp-for="TeamId" />
+        <button type="submit" class="btn btn-primary">Add Formation</button>
+    </form>
 }

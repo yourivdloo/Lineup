@@ -1,4 +1,5 @@
-﻿using Logics.Entities;
+﻿using Data.Enums;
+using Logics.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,5 +24,7 @@ namespace Logics.Services.Interfaces
         Task<List<PlayerPosition>> GetAllPlayerPositions(int id);
 
         Task<Formation> GetFormation(int id);
+
+        List<string> CheckFormation(List<Position> positions);
     }
 }
