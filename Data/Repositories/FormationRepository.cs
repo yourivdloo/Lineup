@@ -32,13 +32,14 @@ namespace Data.Repositories
             return formationDto.id;
         }
 
-        public async Task AddPlayerPosition(PlayerPositionDto ppDto)
+        public async Task<int> AddPlayerPosition(PlayerPositionDto ppDto)
         {
             DBContext.PlayerPositions.Add(ppDto);
             await DBContext.SaveChangesAsync();
+            return ppDto.id;
         }
 
-        public async Task DeleteAllPlayerPositions(int id)
+        private async Task DeleteAllPlayerPositions(int id)
         {
             List<PlayerPositionDto> playerPositions = await GetAllPlayerPositions(id);
 
@@ -66,6 +67,11 @@ namespace Data.Repositories
         public async Task<FormationDto> GetFormation(int id)
         {
             return await DBContext.Formations.AsNoTracking().Where(x => x.id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<PlayerPositionDto> GetPlayerPosition(int playerPositionId)
+        {
+            return await DBContext.PlayerPositions.AsNoTracking().Where(x => x.id == playerPositionId).FirstOrDefaultAsync();
         }
 
         public async Task EditFormation(FormationDto formationDto)

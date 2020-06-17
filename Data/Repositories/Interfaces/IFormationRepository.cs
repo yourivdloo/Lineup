@@ -12,15 +12,15 @@ namespace Data.Repositories.Interfaces
 
         Task<int> AddFormation(FormationDto formationDto);
 
-        Task AddPlayerPosition(PlayerPositionDto ppDto);
-
-        Task DeleteAllPlayerPositions(int id);
+        Task<int> AddPlayerPosition(PlayerPositionDto ppDto);
 
         Task<List<PlayerPositionDto>> GetAllPlayerPositions(int id);
 
         Task DeleteFormation(int id);
 
         Task<FormationDto> GetFormation(int id);
+
+        Task<PlayerPositionDto> GetPlayerPosition(int playerPositionId);
 
         Task EditFormation(FormationDto formationDto);
 

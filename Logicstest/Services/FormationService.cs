@@ -21,8 +21,7 @@ namespace Logics.Services
 
         public async Task<List<Formation>> GetAllFormations(int teamId)
         {
-            List<FormationDto> formationDtos = new List<FormationDto>();
-            formationDtos = await _formationRepository.GetAllFormations(teamId);
+            List<FormationDto> formationDtos = await _formationRepository.GetAllFormations(teamId);
             List<Formation> formations = new List<Formation>();
             foreach (FormationDto dto in formationDtos)
             {
@@ -36,9 +35,9 @@ namespace Logics.Services
             return await _formationRepository.AddFormation(formation.ToModel());
         }
 
-        public async Task AddPlayerPosition(PlayerPosition pp)
+        public async Task<int> AddPlayerPosition(PlayerPosition pp)
         {
-            await _formationRepository.AddPlayerPosition(pp.ToModel());
+            return await _formationRepository.AddPlayerPosition(pp.ToModel());
         }
 
         public async Task DeleteFormation(int id)
@@ -66,6 +65,12 @@ namespace Logics.Services
             }
             return (playerPositions);
             
+        }
+
+        public async Task<PlayerPosition> GetPlayerPosition(int playerPositionId)
+        {
+            PlayerPositionDto ppDto = await _formationRepository.GetPlayerPosition(playerPositionId);
+            return (ppDto.ToEntity());
         }
 
         public async Task<Formation> GetFormation(int id)

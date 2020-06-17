@@ -13,17 +13,19 @@ namespace Logics.Services.Interfaces
 
         Task<int> AddFormation(Formation formation);
 
-        Task AddPlayerPosition(PlayerPosition pp);
-
         Task DeleteFormation(int formationId);
 
         Task EditFormation(Formation formation);
 
-        Task EditPlayerPosition(PlayerPosition pp);
+        Task<Formation> GetFormation(int id);
 
         Task<List<PlayerPosition>> GetAllPlayerPositions(int id);
 
-        Task<Formation> GetFormation(int id);
+        Task<PlayerPosition> GetPlayerPosition(int playerPositionId);
+
+        Task<int> AddPlayerPosition(PlayerPosition pp);
+
+        Task EditPlayerPosition(PlayerPosition pp);
 
         List<string> CheckFormation(List<Position> positions);
     }
