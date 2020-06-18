@@ -112,6 +112,36 @@ namespace Logics.Services.Tests
         }
 
         [TestMethod()]
+        public async Task GetAllFormationsTest1()
+        {
+            //Arrange
+            await CreateService();
+            int teamId = 10;
+            List<Formation> formations = new List<Formation>();
+
+            //Act
+            formations = await _formationService.GetAllFormations(teamId);
+
+            //Assert
+            Assert.AreEqual(0, formations.Count);
+        }
+
+        [TestMethod()]
+        public async Task GetAllFormationsTest2()
+        {
+            //Arrange
+            await CreateService();
+            int teamId = -1;
+            List<Formation> formations = new List<Formation>();
+
+            //Act
+            formations = await _formationService.GetAllFormations(teamId);
+
+            //Assert
+            Assert.AreEqual(0, formations.Count);
+        }
+
+        [TestMethod()]
         public async Task AddFormationTest()
         {
             //Arrange
@@ -354,6 +384,22 @@ namespace Logics.Services.Tests
 
             //Assert
             Assert.AreEqual(0, errors.Count);
+        }
+
+        [TestMethod()]
+        public async Task CheckFormationTest4()
+        {
+            //Arrange
+            await CreateService();
+            List<Position> positions = new List<Position>();
+
+            //Act
+            List<string> errors = _formationService.CheckFormation(positions);
+
+            //Assert
+            Assert.AreEqual(2, errors.Count);
+            Assert.AreEqual("You need exactly 11 field players", errors[0]);
+            Assert.AreEqual("You need exactly 1 goalkeeper", errors[1]);
         }
     }
 }

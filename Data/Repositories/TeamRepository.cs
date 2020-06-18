@@ -48,16 +48,5 @@ namespace Data.Repositories
             DBContext.Teams.Update(teamDto);
             await DBContext.SaveChangesAsync();
         }
-
-        public async Task<List<PlayerDto>> GetAllPlayers(int teamId)
-        {
-            return await DBContext.Players.AsNoTracking().Where(x => x.TeamId == teamId).ToListAsync();
-        }
-
-        public async Task<List<FormationDto>> GetAllFormations(int teamId)
-        {
-            return await DBContext.Formations.AsNoTracking().Where(x => x.TeamId == teamId).ToListAsync();
-        }
-
     }
 }

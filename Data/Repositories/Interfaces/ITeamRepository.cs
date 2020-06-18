@@ -17,9 +17,5 @@ namespace Data.Repositories.Interfaces
         Task<TeamDto> GetTeam(int teamId);
 
         Task EditTeam(TeamDto teamDto);
-
-        Task<List<PlayerDto>> GetAllPlayers(int teamId);
-
-        Task<List<FormationDto>> GetAllFormations(int teamId);
     }
 }

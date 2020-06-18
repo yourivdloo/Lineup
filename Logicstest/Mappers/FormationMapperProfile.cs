@@ -14,7 +14,6 @@ namespace Lineup.Logics.Mappers
         {
             CreateMap<Formation, FormationDto>(MemberList.Destination);
 
-            // model to entity
             CreateMap<FormationDto, Formation>(MemberList.Source);
         }
     }

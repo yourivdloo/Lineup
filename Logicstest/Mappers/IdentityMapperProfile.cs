@@ -12,6 +12,7 @@ namespace Logics.Mappers
         public IdentityMapperProfile()
         {
             CreateMap<ApplicationUser, ApplicationUserDto>(MemberList.Destination);
+
             CreateMap<ApplicationUserDto, ApplicationUser>(MemberList.Source);
         }
     }

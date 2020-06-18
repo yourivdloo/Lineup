@@ -16,11 +16,6 @@ namespace Logics.Mappers
 
         internal static IMapper Mapper { get; }
 
-        public static List<Team> ToEntity(this List<TeamDto> teams)
-        {
-            return teams == null ? null : Mapper.Map<List<Team>>(teams);
-        }
-
         public static TeamDto ToModel(this Team team)
         {
             return team == null ? null : Mapper.Map<TeamDto>(team);
