@@ -29,14 +29,18 @@ namespace Lineup.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPlayer(PlayerViewModel model)
         {
-            Player player = new Player()
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Age = model.Age,
-                TeamId = model.TeamId
-            };
-            await _PlayerService.AddPlayer(player);
-            return RedirectToAction("TeamHome", "Team", new { id = model.TeamId});
+                Player player = new Player()
+                {
+                    Name = model.Name,
+                    Age = model.Age,
+                    TeamId = model.TeamId
+                };
+                await _PlayerService.AddPlayer(player);
+                return RedirectToAction("TeamHome", "Team", new { id = model.TeamId });
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -49,15 +53,19 @@ namespace Lineup.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPlayer(PlayerViewModel model)
         {
-            Player player = new Player()
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Age = model.Age,
-                Id = model.PlayerId,
-                TeamId = model.TeamId
-            };
-            await _PlayerService.EditPlayer(player);
-            return RedirectToAction("TeamHome", "Team", new {id = model.TeamId });
+                Player player = new Player()
+                {
+                    Name = model.Name,
+                    Age = model.Age,
+                    Id = model.PlayerId,
+                    TeamId = model.TeamId
+                };
+                await _PlayerService.EditPlayer(player);
+                return RedirectToAction("TeamHome", "Team", new { id = model.TeamId });
+            }
+            return View(model);
         }
 
         [HttpGet]

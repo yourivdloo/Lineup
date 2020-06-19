@@ -10,7 +10,7 @@ namespace Lineup.ViewModels
 {
     public class FormationViewModel
     {
-        [Required (ErrorMessage ="You need to fill in a team name.")]
+        [Required (ErrorMessage ="You need to fill in a formation name.")]
         public string Name { get; set; }
 
         public int Id { get; set; }

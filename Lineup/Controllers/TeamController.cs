@@ -44,15 +44,19 @@ namespace Lineup.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTeam(TeamViewModel model)
         {
-            var userClaims = HttpContext.User;
-            var user = await _IdentityService.GetUserAsync(userClaims.Identity.Name);
-            Team team = new Team()
+            if (ModelState.IsValid)
             {
-                UserId = user.Id,
-                Name = model.Name
-            };
-            await _TeamService.AddTeam(team);
-            return RedirectToAction(nameof(AccountHome));
+                var userClaims = HttpContext.User;
+                var user = await _IdentityService.GetUserAsync(userClaims.Identity.Name);
+                Team team = new Team()
+                {
+                    UserId = user.Id,
+                    Name = model.Name
+                };
+                await _TeamService.AddTeam(team);
+                return RedirectToAction(nameof(AccountHome));
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -81,16 +85,20 @@ namespace Lineup.Controllers
         [HttpPost]
         public async Task<IActionResult> EditTeam(TeamViewModel model)
         {
-            var userClaims = HttpContext.User;
-            var user = await _IdentityService.GetUserAsync(userClaims.Identity.Name);
-            Team team = new Team()
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Id = model.Id,
-                UserId = user.Id
-            };
-            await _TeamService.EditTeam(team);
-            return RedirectToAction(nameof(AccountHome));
+                var userClaims = HttpContext.User;
+                var user = await _IdentityService.GetUserAsync(userClaims.Identity.Name);
+                Team team = new Team()
+                {
+                    Name = model.Name,
+                    Id = model.Id,
+                    UserId = user.Id
+                };
+                await _TeamService.EditTeam(team);
+                return RedirectToAction(nameof(AccountHome));
+            }
+            return View(model);
         }
     }
 }
